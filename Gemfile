@@ -35,7 +35,6 @@ gem "kamal"
 gem "bootsnap", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
@@ -62,6 +61,23 @@ group :development, :test do
   gem "reek", require: false
   gem "flay", require: false
   gem "flog", require: false
+
+  # RSpec testing framework
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rails-controller-testing"  # For controller tests
+
+  # Cucumber + Capybara for E2E tests
+  gem "cucumber-rails", require: false
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers" # Automatically installs browser drivers
+  gem "database_cleaner-active_record"
+
+  # Code coverage analysis
+  gem "simplecov", require: false
+  gem "simplecov-html", require: false
 end
 
 group :development do
@@ -70,7 +86,7 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
+  # RSpec additional testing gems
+  gem "shoulda-matchers"
+  gem "rspec-collection_matchers"
 end
