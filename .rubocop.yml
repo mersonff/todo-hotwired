@@ -1,8 +1,74 @@
 # Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+plugins:
+  - rubocop-performance
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'bin/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'storage/**/*'
+    - 'config/boot.rb'
+    - 'config/environment.rb'
+    - 'config/application.rb'
+
+# Customizations for our app
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'config/environments/*.rb'
+    - 'test/**/*'
+    - 'spec/**/*'
+
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns: 
+    - '\A\s*#.*\z'  # Comments
+    - '\A\s*it.*\z' # RSpec tests
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Rails specific configurations
+Rails/OutputSafety:
+  Enabled: true
+
+Rails/Delegate:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+
+# Performance optimizations
+Performance/RedundantMerge:
+  Enabled: true
+
+Performance/StringReplacement:
+  Enabled: true
+
+# Minitest specific
+Minitest/AssertEmptyLiteral:
+  Enabled: true
+
+Minitest/LiteralAsActualArgument:
+  Enabled: true

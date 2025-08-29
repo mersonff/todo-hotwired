@@ -52,6 +52,16 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Additional RuboCop extensions
+  gem "rubocop-performance", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-minitest", require: false
+
+  # Code quality and complexity analysis
+  gem "reek", require: false
+  gem "flay", require: false
+  gem "flog", require: false
 end
 
 group :development do

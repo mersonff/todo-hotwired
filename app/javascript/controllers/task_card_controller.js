@@ -1,10 +1,10 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static values = { taskId: Number }
 
   connect() {
-    this.element.style.cursor = "pointer"
+    this.element.style.cursor = 'pointer'
     this.isDragging = false
     this.clickTimer = null
   }
@@ -58,37 +58,37 @@ export default class extends Controller {
   }
 
   click(event) {
-    console.log("Click event triggered", event.target)
+    console.log('Click event triggered', event.target)
     
     // Se clicou em elemento interativo, não faz nada
     if (this.isInteractiveElement(event.target)) {
-      console.log("Clicked on interactive element, ignoring")
+      console.log('Clicked on interactive element, ignoring')
       return
     }
 
     // Previne o comportamento padrão se estava arrastando
     if (this.isDragging) {
-      console.log("Was dragging, preventing click")
+      console.log('Was dragging, preventing click')
       event.preventDefault()
       event.stopPropagation()
       return
     }
 
-    console.log("Opening modal for task", this.taskIdValue)
+    console.log('Opening modal for task', this.taskIdValue)
     // Abre o modal para cliques normais
     this.openModal()
   }
 
   async openModal() {
-    const modal = document.getElementById("task-modal")
-    const modalBody = document.getElementById("task-modal-body")
+    const modal = document.getElementById('task-modal')
+    const modalBody = document.getElementById('task-modal-body')
     
     if (modal && modalBody) {
       try {
         // Mostra o modal com loading
         modalBody.innerHTML = '<div class="modal-loading">⏳ Carregando...</div>'
-        modal.style.display = "block"
-        document.body.style.overflow = "hidden"
+        modal.style.display = 'block'
+        document.body.style.overflow = 'hidden'
         
         // Busca o conteúdo da tarefa
         const response = await fetch(`/tasks/${this.taskIdValue}`, {
@@ -104,11 +104,11 @@ export default class extends Controller {
           modalBody.innerHTML = '<div class="modal-error">❌ Erro ao carregar tarefa</div>'
         }
       } catch (error) {
-        console.error("Error loading task:", error)
+        console.error('Error loading task:', error)
         modalBody.innerHTML = '<div class="modal-error">❌ Erro ao carregar tarefa</div>'
       }
     } else {
-      console.error("Modal ou modal body não encontrado", { modal, modalBody })
+      console.error('Modal ou modal body não encontrado', { modal, modalBody })
     }
   }
 

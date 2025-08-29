@@ -1,7 +1,7 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["editor"]
+  static targets = ['editor']
 
   connect() {
     // Aguarda o Trix estar completamente carregado
@@ -21,7 +21,9 @@ export default class extends Controller {
 
   translateTrixToolbar() {
     const toolbar = this.element.previousElementSibling
-    if (!toolbar || !toolbar.classList.contains('trix-toolbar')) return
+    if (!toolbar || !toolbar.classList.contains('trix-toolbar')) {
+      return
+    }
 
     const buttons = toolbar.querySelectorAll('.trix-button')
     
@@ -52,7 +54,9 @@ export default class extends Controller {
 
   customizeIcons() {
     const toolbar = this.element.previousElementSibling
-    if (!toolbar || !toolbar.classList.contains('trix-toolbar')) return
+    if (!toolbar || !toolbar.classList.contains('trix-toolbar')) {
+      return
+    }
 
     // Customiza ícones com emojis e símbolos
     const iconMappings = {

@@ -87,12 +87,12 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update(task_params)
         flash[:notice] = "✨ Tarefa \"#{@task.title}\" atualizada com sucesso!"
-        
+
         format.turbo_stream do
           redirect_to tasks_path, status: :see_other
         end
-        format.html { 
-          redirect_to tasks_path, status: :see_other 
+        format.html {
+          redirect_to tasks_path, status: :see_other
         }
         format.json { render :show, status: :ok, location: @task }
       else
