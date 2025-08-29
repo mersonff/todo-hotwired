@@ -1,0 +1,18 @@
+<div class="confirmation-modal">
+  <div class="modal-backdrop" onclick="window.hideDeleteConfirmation()"></div>
+  <div class="modal-content">
+    <h3 class="modal-title">Rabiscar fora? 🗑️</h3>
+    <p class="modal-message">
+      Tem certeza que quer apagar este rabisco?<br>
+      <small>(Ele vai explodir em pedacinhos! 💥)</small>
+    </p>
+    <div class="modal-buttons">
+      <button class="modal-button modal-button--cancel" onclick="window.hideDeleteConfirmation()">
+        Cancelar
+      </button>
+      <button class="modal-button modal-button--danger" onclick="window.confirmDelete()">
+        💥 Explodir!
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<% content_for :form do %>
+    <%= turbo_frame_tag "new_task" do %>
+        <%= render "form", task: Task.new %>
+    <% end %>
+<% end %>
+
+<div data-controller="task-filters">
+    <div class="task-controls">
+        <div class="controls-row">
+            <div class="control-group">
+                <h4>🔍 Filtrar</h4>
+                <div class="control-buttons">
+                    <button class="control-btn" data-filter-type="all" data-action="click->task-filters#filterAll" data-task-filters-target="filterButton">
+                        📋 Todas
+                    </button>
+                    <button class="control-btn" data-filter-type="pending" data-action="click->task-filters#filterPending" data-task-filters-target="filterButton">
+                        ⏳ Pendentes
+                    </button>
+                    <button class="control-btn" data-filter-type="completed" data-action="click->task-filters#filterCompleted" data-task-filters-target="filterButton">
+                        ✅ Concluídas
+                    </button>
+                    <button class="control-btn" data-filter-type="important" data-action="click->task-filters#filterImportant" data-task-filters-target="filterButton">
+                        ⭐ Importantes
+                    </button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h4>📊 Ordenar</h4>
+                <div class="control-buttons">
+                    <button class="control-btn" data-sort-type="position" data-action="click->task-filters#sortByPosition" data-task-filters-target="sortButton">
+                        🔢 Posição
+                    </button>
+                    <button class="control-btn" data-sort-type="created" data-action="click->task-filters#sortByCreated" data-task-filters-target="sortButton">
+                        📅 Criação
+                    </button>
+                    <button class="control-btn" data-sort-type="title" data-action="click->task-filters#sortByTitle" data-task-filters-target="sortButton">
+                        🔤 Título
+                    </button>
+                    <button class="control-btn" data-sort-type="importance" data-action="click->task-filters#sortByImportance" data-task-filters-target="sortButton">
+                        ⭐ Importância
+                    </button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h4>📐 Tamanho</h4>
+                <div class="control-buttons">
+                    <button class="control-btn" data-grid-type="small" data-action="click->task-filters#gridSmall" data-task-filters-target="gridButton">
+                        🔹 Pequeno
+                    </button>
+                    <button class="control-btn" data-grid-type="medium" data-action="click->task-filters#gridMedium" data-task-filters-target="gridButton">
+                        🔸 Médio
+                    </button>
+                    <button class="control-btn" data-grid-type="large" data-action="click->task-filters#gridLarge" data-task-filters-target="gridButton">
+                        🔶 Grande
+                    </button>
+                </div>
+            </div>
+            
+            <div class="task-count">
+                <%= @tasks.count %> tarefa<%= @tasks.count != 1 ? 's' : '' %>
+            </div>
+        </div>
+    </div>
+
+    <ul class="todo-list mural-grid--medium" id="tasks" data-controller="sortable-list" data-task-filters-target="grid">
+        <%= render @tasks %>
+    </ul>
+</div>

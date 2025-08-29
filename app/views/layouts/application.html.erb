@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TodoRails</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "rabisco", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+
+    <div class="notebook-container">
+        <header>
+            <h1>Minhas Tarefas Rabiscadas</h1>
+        </header>
+        <%= yield :form %>
+    </div>
+
+    <main class="post-it-board">
+        <%= yield %>
+    </main>
+
+    <!-- Flash messages para toast -->
+    <% if flash[:notice] %>
+        <meta name="flash-notice" content="<%= html_escape(flash[:notice]) %>">
+    <% end %>
+    <% if flash[:alert] %>
+        <meta name="flash-alert" content="<%= html_escape(flash[:alert]) %>">
+    <% end %>
+
+    <%= render 'shared/confirmation_modal' %>
+    <%= render 'shared/task_modal' %>
+    
+    <!-- Container para toasts -->
+    <div class="toast-container" data-controller="toast"></div>
+    
+    <!-- Container para notificações do turbo_stream -->
+    <div id="notifications"></div>
+  </body>
+</html>

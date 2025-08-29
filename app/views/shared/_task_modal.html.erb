@@ -1,0 +1,32 @@
+<div id="task-modal" class="task-modal" style="display: none;">
+  <div class="modal-backdrop" onclick="window.closeTaskModal()"></div>
+  <div class="modal-content task-modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">📋 Detalhes da Tarefa</h3>
+      <button class="modal-close" onclick="window.closeTaskModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="task-modal-body">
+      <!-- Conteúdo da tarefa será carregado aqui -->
+    </div>
+  </div>
+</div>
+
+<script>
+  window.closeTaskModal = function() {
+    const modal = document.getElementById('task-modal')
+    const body = document.getElementById('task-modal-body')
+    
+    if (modal) {
+      modal.style.display = 'none'
+      document.body.style.overflow = 'auto'
+      body.innerHTML = ''
+    }
+  }
+
+  // Fechar modal com ESC
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      window.closeTaskModal()
+    }
+  })
+</script>

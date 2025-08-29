@@ -1,0 +1,2 @@
+<%# Atualiza a tarefa inteira para incluir mudanças de importância %>
+<%= turbo_stream.replace dom_id(@task, :item), partial: "tasks/task", locals: { task: @task } %>

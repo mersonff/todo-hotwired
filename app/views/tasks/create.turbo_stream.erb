@@ -1,0 +1,13 @@
+<%# Adiciona a nova tarefa no topo da lista com animação %>
+<%= turbo_stream.prepend "tasks", partial: "tasks/new_task", locals: { task: @task } %>
+
+<%# Limpa o formulário substituindo por um novo formulário vazio %>
+<%= turbo_stream.replace "new_task", partial: "tasks/form", locals: { task: Task.new } %>
+
+<%# Dispara evento customizado para mostrar toast usando um meta tag %>
+<%= turbo_stream.append "head" do %>
+    <meta name="toast-data" 
+          content="<%= j(@toast_message) %>" 
+          data-type="<%= @toast_type %>" 
+          data-timestamp="<%= Time.current.to_i %>">
+<% end %>

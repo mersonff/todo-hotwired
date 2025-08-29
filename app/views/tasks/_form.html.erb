@@ -1,0 +1,64 @@
+<%= form_with(model: task, class: "task-form-wrapper", data: { controller: "form-submit", action: "submit->form-submit#submit" }) do |form| %>
+
+  <%# Bloco de Erros %>
+  <% if task.errors.any? %>
+    <div class="error-box">
+      <strong>Opa, rabisco inválido!</strong>
+      <ul>
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# Container do Formulário %>
+  <div class="add-task-form">
+
+    <%# Campo de Título %>
+    <div class="form-field-group">
+      <%= form.label :title, "Título da Tarefa" %>
+      <%= form.text_field :title, class: "rabisco-input", placeholder: "Ex: Estudar Rails..." %>
+    </div>
+
+    <%# Campo de Descrição (Rich Text) %>
+    <div class="form-field-group" data-controller="trix-customization">
+      <%= form.label :description, "Descrição" %>
+      <%= form.rich_text_area :description, 
+          class: "rabisco-rich-text", 
+          placeholder: "Descreva sua tarefa com detalhes... ✨",
+          data: { trix_customization_target: "editor" } %>
+    </div>
+
+    <%# Campo de Tags %>
+    <div class="form-field-group" data-controller="tags-input">
+      <%= form.label :tag_list, "Tags" %>
+      <div class="rabisco-input tags-input-wrapper">
+        <div data-tags-input-target="badgeContainer" class="tags-container"></div>
+        <input type="text" data-action="keyup->tags-input#handleInput" placeholder="(ex: casa, trabalho)" value="<%= task.tag_list %>">
+        <%= form.hidden_field :tag_list, data_tags_input_target: "hiddenInput" %>
+      </div>
+    </div>
+
+    <%# Paleta de Cores %>
+    <div class="form-field-group">
+      <%= form.label :color, "Cor do Post-it" %>
+      <div class="color-palette">
+        <% color_map = {
+          blue: 'postit-azul',
+          yellow: 'marcador-amarelo',
+          green: 'caneta-verde',
+          orange: 'aviso-laranja',
+          pink: 'urgente-magenta'
+        } %>
+        <% color_map.each do |name, var_name| %>
+          <%= form.radio_button :color, name, id: "task_color_#{name}", class: "color-swatch-radio color-swatch--#{name}", checked: (task.color.presence || 'blue') == name.to_s %>
+          <label for="task_color_#{name}" class="color-swatch-label"></label>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Botão de Envio %>
+    <%= form.submit form.object.persisted? ? "Atualizar" : "Adicionar", class: "rabisco-button", data: { form_submit_target: "button" } %>
+  </div>
+<% end %>

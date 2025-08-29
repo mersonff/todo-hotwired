@@ -1,0 +1,8 @@
+<li id="<%= dom_id(task, :item) %>" 
+    class="todo-item <%= task.post_it_color %> <%= task.completed? ? 'is-completed' : '' %>" 
+    data-controller="delete-task" 
+    data-task-id="<%= task.id %>"
+    data-position="<%= task.position || 0 %>"
+    data-created="<%= task.created_at.iso8601 %>">
+    <%= render 'tasks/task_content', task: task %>
+</li>
