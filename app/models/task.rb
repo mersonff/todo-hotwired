@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+    validates :title, presence: true
     validates :description, presence: true
 
     has_rich_text :description
@@ -47,7 +48,10 @@ class Task < ApplicationRecord
 
     def set_default_position
         # Define a posição como o próximo número disponível (no topo da lista)
-        max_position = Task.maximum(:position) || -1
-        self.position = max_position + 1
+        # apenas se não foi especificada (nil ou valor padrão 0 quando há outras tasks)
+        if self.position.nil? || (self.position == 0 && Task.exists?)
+            max_position = Task.maximum(:position) || -1
+            self.position = max_position + 1
+        end
     end
 end
