@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 // Connects to data-controller="delete-task"
 export default class extends Controller {
@@ -40,7 +40,9 @@ window.showDeleteConfirmation = function(deleteUrl, taskElement) {
 // Função global para esconder o modal
 window.hideDeleteConfirmation = function() {
   const modal = document.querySelector('.confirmation-modal')
-  if (!modal) return
+  if (!modal) {
+    return
+  }
   
   modal.classList.remove('show')
   document.body.style.overflow = 'auto'
@@ -52,7 +54,9 @@ window.hideDeleteConfirmation = function() {
 
 // Função global para confirmar a exclusão
 window.confirmDelete = function() {
-  if (!window.pendingDelete) return
+  if (!window.pendingDelete) {
+    return
+  }
   
   window.hideDeleteConfirmation()
   

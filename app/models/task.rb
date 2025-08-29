@@ -22,14 +22,14 @@ class Task < ApplicationRecord
     end
 
     def post_it_color
-        color_to_use = self.color.presence || 'blue'
+        color_to_use = self.color.presence || "blue"
         "post-it-color--#{color_to_use}"
     end
 
     # Método para atualizar posição e reordenar outras tarefas
     def update_position!(new_position)
         old_position = self.position
-        
+
         if new_position != old_position
             if new_position > old_position
                 # Movendo para baixo: decrementa posições entre old_position+1 e new_position
@@ -38,7 +38,7 @@ class Task < ApplicationRecord
                 # Movendo para cima: incrementa posições entre new_position e old_position-1
                 Task.where(position: new_position..(old_position - 1)).update_all("position = position + 1")
             end
-            
+
             self.update_column(:position, new_position)
         end
     end

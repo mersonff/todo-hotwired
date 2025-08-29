@@ -1,8 +1,8 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 // Connects to data-controller="tags-input"
 export default class extends Controller {
-  static targets = ["input", "hiddenInput", "badgeContainer"]
+  static targets = ['input', 'hiddenInput', 'badgeContainer']
 
   connect() {
     this.tags = []
@@ -14,18 +14,18 @@ export default class extends Controller {
     if (existingTags && existingTags.trim()) {
       this.tags = existingTags.split(',').map(tag => tag.trim()).filter(tag => tag)
       this.updateUI()
-      this.element.querySelector('input[type="text"]').value = ""
+      this.element.querySelector('input[type="text"]').value = ''
     }
   }
 
   handleInput(event) {
-    if (event.key === "," || event.key === "Enter") {
+    if (event.key === ',' || event.key === 'Enter') {
       event.preventDefault()
       const newTag = event.target.value.trim().replace(/,/g, '')
       if (newTag && !this.tags.includes(newTag)) {
         this.addTag(newTag)
       }
-      event.target.value = ""
+      event.target.value = ''
     }
   }
 
@@ -41,22 +41,22 @@ export default class extends Controller {
   }
 
   updateUI() {
-    this.badgeContainerTarget.innerHTML = ""
+    this.badgeContainerTarget.innerHTML = ''
     this.tags.forEach(tag => {
-      const badge = document.createElement("span")
-      badge.className = "tag-badge"
+      const badge = document.createElement('span')
+      badge.className = 'tag-badge'
       badge.textContent = tag
 
-      const removeButton = document.createElement("span")
-      removeButton.className = "remove-tag"
-      removeButton.textContent = "x"
-      removeButton.dataset.action = "click->tags-input#removeTag"
+      const removeButton = document.createElement('span')
+      removeButton.className = 'remove-tag'
+      removeButton.textContent = 'x'
+      removeButton.dataset.action = 'click->tags-input#removeTag'
       removeButton.dataset.tag = tag
 
       badge.appendChild(removeButton)
       this.badgeContainerTarget.appendChild(badge)
     })
 
-    this.hiddenInputTarget.value = this.tags.join(", ")
+    this.hiddenInputTarget.value = this.tags.join(', ')
   }
 }

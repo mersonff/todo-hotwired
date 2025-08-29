@@ -7,11 +7,13 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get tasks_url
+
     assert_response :success
   end
 
   test "should get new" do
     get new_task_url
+
     assert_response :success
   end
 
@@ -25,16 +27,19 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
 
   test "should show task" do
     get task_url(@task)
+
     assert_response :success
   end
 
   test "should get edit" do
     get edit_task_url(@task)
+
     assert_response :success
   end
 
   test "should update task" do
     patch task_url(@task), params: { task: { description: @task.description } }
+
     assert_redirected_to task_url(@task)
   end
 

@@ -1,0 +1,50 @@
+---
+exclude_paths:
+  - db/migrate
+  - vendor
+  - bin
+  - node_modules
+  - tmp
+  - log
+  - storage
+  - config/boot.rb
+  - config/environment.rb
+  - config/application.rb
+
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  
+  TooManyMethods:
+    max_methods: 15
+  
+  TooManyStatements:
+    max_statements: 12
+  
+  LongParameterList:
+    max_params: 4
+  
+  FeatureEnvy:
+    enabled: true
+  
+  UtilityFunction:
+    enabled: true
+  
+  DataClump:
+    enabled: true
+  
+  ControlParameter:
+    enabled: true
+  
+  RepeatedConditional:
+    enabled: true
+  
+  UncommunicativeVariableName:
+    reject:
+      - /^[a-z]$/
+      - /[0-9]$/
+  
+  UncommunicativeMethodName:
+    reject:
+      - /^[a-z]$/
+      - /[0-9]$/

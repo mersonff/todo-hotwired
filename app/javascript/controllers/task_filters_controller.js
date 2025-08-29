@@ -1,7 +1,7 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["grid", "filterButton", "sortButton", "gridButton"]
+  static targets = ['grid', 'filterButton', 'sortButton', 'gridButton']
   static values = { 
     filter: String,
     sort: String,
@@ -9,90 +9,90 @@ export default class extends Controller {
   }
 
   connect() {
-    this.filterValue = "all"
-    this.sortValue = "position"
-    this.gridSizeValue = "medium"
+    this.filterValue = 'all'
+    this.sortValue = 'position'
+    this.gridSizeValue = 'medium'
     this.updateDisplay()
   }
 
   // Filtros
   filterAll() {
-    this.filterValue = "all"
+    this.filterValue = 'all'
     this.updateFilter()
   }
 
   filterCompleted() {
-    this.filterValue = "completed"
+    this.filterValue = 'completed'
     this.updateFilter()
   }
 
   filterPending() {
-    this.filterValue = "pending"
+    this.filterValue = 'pending'
     this.updateFilter()
   }
 
   filterImportant() {
-    this.filterValue = "important"
+    this.filterValue = 'important'
     this.updateFilter()
   }
 
   // Ordenação
   sortByPosition() {
-    this.sortValue = "position"
+    this.sortValue = 'position'
     this.updateSort()
   }
 
   sortByCreated() {
-    this.sortValue = "created"
+    this.sortValue = 'created'
     this.updateSort()
   }
 
   sortByTitle() {
-    this.sortValue = "title"
+    this.sortValue = 'title'
     this.updateSort()
   }
 
   sortByImportance() {
-    this.sortValue = "importance"
+    this.sortValue = 'importance'
     this.updateSort()
   }
 
   // Grid
   gridSmall() {
-    this.gridSizeValue = "small"
+    this.gridSizeValue = 'small'
     this.updateGrid()
   }
 
   gridMedium() {
-    this.gridSizeValue = "medium"
+    this.gridSizeValue = 'medium'
     this.updateGrid()
   }
 
   gridLarge() {
-    this.gridSizeValue = "large"
+    this.gridSizeValue = 'large'
     this.updateGrid()
   }
 
   // Métodos auxiliares
   updateFilter() {
-    this.updateActiveButtons("filter")
+    this.updateActiveButtons('filter')
     this.applyFilters()
   }
 
   updateSort() {
-    this.updateActiveButtons("sort")
+    this.updateActiveButtons('sort')
     this.applySorting()
   }
 
   updateGrid() {
-    this.updateActiveButtons("grid")
+    this.updateActiveButtons('grid')
     this.applyGridSize()
   }
 
   updateActiveButtons(type) {
     // Remove active de todos os botões do tipo
     this[`${type}ButtonTargets`].forEach(btn => {
-      btn.classList.remove("active")
+      btn.classList.remove('active')
     })
 
     // Adiciona active no botão correspondente
@@ -101,7 +101,7 @@ export default class extends Controller {
       btn.dataset[`${type}Type`] === activeValue
     )
     if (activeButton) {
-      activeButton.classList.add("active")
+      activeButton.classList.add('active')
     }
   }
 
@@ -114,22 +114,22 @@ export default class extends Controller {
       const isImportant = starIcon !== null
       let show = false
 
-      switch(this.filterValue) {
-        case "all":
-          show = true
-          break
-        case "completed":
-          show = isCompleted
-          break
-        case "pending":
-          show = !isCompleted
-          break
-        case "important":
-          show = isImportant
-          break
+      switch (this.filterValue) {
+      case 'all':
+        show = true
+        break
+      case 'completed':
+        show = isCompleted
+        break
+      case 'pending':
+        show = !isCompleted
+        break
+      case 'important':
+        show = isImportant
+        break
       }
 
-      task.style.display = show ? "block" : "none"
+      task.style.display = show ? 'block' : 'none'
     })
 
     this.updateTaskCount()
@@ -147,35 +147,40 @@ export default class extends Controller {
 
   sortTasks(tasks) {
     return tasks.sort((a, b) => {
-      switch(this.sortValue) {
-        case "position":
-          return this.getTaskPosition(a) - this.getTaskPosition(b)
-        case "created":
-          return new Date(this.getTaskCreated(b)) - new Date(this.getTaskCreated(a))
-        case "title":
-          return this.getTaskTitle(a).localeCompare(this.getTaskTitle(b))
-        case "importance":
-          const aImportant = this.isTaskImportant(a)
-          const bImportant = this.isTaskImportant(b)
-          if (aImportant && !bImportant) return -1
-          if (!aImportant && bImportant) return 1
-          return this.getTaskPosition(a) - this.getTaskPosition(b)
-        default:
-          return 0
+      switch (this.sortValue) {
+      case 'position':
+        return this.getTaskPosition(a) - this.getTaskPosition(b)
+      case 'created':
+        return new Date(this.getTaskCreated(b)) - new Date(this.getTaskCreated(a))
+      case 'title':
+        return this.getTaskTitle(a).localeCompare(this.getTaskTitle(b))
+      case 'importance': {
+        const aImportant = this.isTaskImportant(a)
+        const bImportant = this.isTaskImportant(b)
+        if (aImportant && !bImportant) {
+          return -1
+        }
+        if (!aImportant && bImportant) {
+          return 1
+        }
+        return this.getTaskPosition(a) - this.getTaskPosition(b)
+      }
+      default:
+        return 0
       }
     })
   }
 
   applyGridSize() {
     this.gridTarget.className = this.gridTarget.className
-      .replace(/mural-grid--(small|medium|large)/, "")
+      .replace(/mural-grid--(small|medium|large)/, '')
     this.gridTarget.classList.add(`mural-grid--${this.gridSizeValue}`)
   }
 
   updateDisplay() {
-    this.updateActiveButtons("filter")
-    this.updateActiveButtons("sort")
-    this.updateActiveButtons("grid")
+    this.updateActiveButtons('filter')
+    this.updateActiveButtons('sort')
+    this.updateActiveButtons('grid')
     this.applyFilters()
     this.applySorting()
     this.applyGridSize()
@@ -187,7 +192,7 @@ export default class extends Controller {
     
     const countElement = document.querySelector('.task-count')
     if (countElement) {
-      if (this.filterValue === "all") {
+      if (this.filterValue === 'all') {
         countElement.textContent = `${totalTasks} tarefa${totalTasks !== 1 ? 's' : ''}`
       } else {
         countElement.textContent = `${visibleTasks} de ${totalTasks} tarefa${totalTasks !== 1 ? 's' : ''}`
@@ -197,16 +202,16 @@ export default class extends Controller {
 
   // Helpers para extrair dados das tasks
   getTaskPosition(task) {
-    return parseInt(task.dataset.position || "0")
+    return parseInt(task.dataset.position || '0')
   }
 
   getTaskCreated(task) {
-    return task.dataset.created || ""
+    return task.dataset.created || ''
   }
 
   getTaskTitle(task) {
     const titleElement = task.querySelector('.task-title')
-    return titleElement ? titleElement.textContent.trim() : ""
+    return titleElement ? titleElement.textContent.trim() : ''
   }
 
   isTaskImportant(task) {

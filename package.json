@@ -1,0 +1,31 @@
+{
+  "name": "todo-rails",
+  "version": "1.0.0",
+  "description": "Rails Todo App with Hotwire",
+  "main": "app/javascript/application.js",
+  "scripts": {
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:ruby",
+    "lint:js": "eslint app/javascript/**/*.js",
+    "lint:css": "stylelint app/assets/stylesheets/**/*.css",
+    "lint:ruby": "bundle exec rubocop",
+    "lint:fix": "npm run lint:js:fix && npm run lint:css:fix && npm run lint:ruby:fix",
+    "lint:js:fix": "eslint app/javascript/**/*.js --fix",
+    "lint:css:fix": "stylelint app/assets/stylesheets/**/*.css --fix",
+    "lint:ruby:fix": "bundle exec rubocop -A",
+    "security": "bundle exec brakeman",
+    "quality": "bundle exec reek && bundle exec flay && bundle exec flog app/",
+    "test": "bin/rails test",
+    "precommit": "npm run lint && npm run security"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}

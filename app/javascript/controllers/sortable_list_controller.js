@@ -1,28 +1,28 @@
-import { Controller } from "@hotwired/stimulus"
-import Sortable from "sortablejs"
+import { Controller } from '@hotwired/stimulus'
+import Sortable from 'sortablejs'
 
 // Connects to data-controller="sortable-list"
 export default class extends Controller {
   connect() {
-    console.log("Sortable controller connected!")
+    console.log('Sortable controller connected!')
     
     this.sortable = Sortable.create(this.element, {
       animation: 400,
-      easing: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-      ghostClass: "task-ghost",
-      chosenClass: "task-chosen",
-      dragClass: "task-drag",
+      easing: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+      ghostClass: 'task-ghost',
+      chosenClass: 'task-chosen',
+      dragClass: 'task-drag',
       // Remover handle para permitir drag em qualquer lugar do card
-      filter: ".checkbox, .icon-star-wrapper, .icon-trash-wrapper, button, form, input, a", // Elementos que não devem iniciar drag
+      filter: '.checkbox, .icon-star-wrapper, .icon-trash-wrapper, button, form, input, a', // Elementos que não devem iniciar drag
       preventOnFilter: false,
       delay: 150, // Pequeno delay para distinguir entre click e drag
       delayOnTouchStart: true,
       onStart: (event) => {
-        console.log("Drag started!", event)
+        console.log('Drag started!', event)
         this.onDragStart(event)
       },
       onEnd: (event) => {
-        console.log("Drag ended!", event)
+        console.log('Drag ended!', event)
         this.onDragEnd(event)
       },
       onMove: (event) => {
@@ -32,7 +32,7 @@ export default class extends Controller {
   }
 
   disconnect() {
-    console.log("Sortable controller disconnected!")
+    console.log('Sortable controller disconnected!')
     if (this.sortable) {
       this.sortable.destroy()
     }
@@ -157,14 +157,14 @@ export default class extends Controller {
   }
 
   updateTaskPosition(taskElement, newPosition) {
-    console.log("Updating position for:", taskElement, "to position:", newPosition)
+    console.log('Updating position for:', taskElement, 'to position:', newPosition)
     
     // Extrai o ID da tarefa do elemento
     const taskId = this.extractTaskId(taskElement)
-    console.log("Task ID:", taskId)
+    console.log('Task ID:', taskId)
     
     if (!taskId) {
-      console.error("Could not extract task ID")
+      console.error('Could not extract task ID')
       return
     }
 
@@ -180,9 +180,9 @@ export default class extends Controller {
         position: newPosition
       })
     }).then(response => {
-      console.log("Response:", response)
+      console.log('Response:', response)
       if (response.ok) {
-        console.log("Position updated successfully!")
+        console.log('Position updated successfully!')
         this.showSuccessFeedback(taskElement)
       } else {
         console.error('Erro ao atualizar posição da tarefa')
@@ -198,7 +198,7 @@ export default class extends Controller {
     // Primeiro tenta o data-task-id que agora está diretamente no <li>
     const taskId = element.dataset.taskId
     if (taskId) {
-      console.log("Found task ID from data attribute:", taskId)
+      console.log('Found task ID from data attribute:', taskId)
       return taskId
     }
     
@@ -206,18 +206,18 @@ export default class extends Controller {
     const turboFrame = element.querySelector('turbo-frame') || element.closest('turbo-frame')
     if (turboFrame) {
       const id = turboFrame.id
-      console.log("Turbo frame ID:", id)
+      console.log('Turbo frame ID:', id)
       const match = id.match(/task_(\d+)/)
       return match ? match[1] : null
     }
     
-    console.error("Could not find task ID in element:", element)
+    console.error('Could not find task ID in element:', element)
     return null
   }
 
   showSuccessFeedback(element) {
     element.classList.add('position-updated')
-    console.log("Success feedback shown")
+    console.log('Success feedback shown')
     
     setTimeout(() => {
       element.classList.remove('position-updated')
@@ -226,7 +226,7 @@ export default class extends Controller {
 
   showErrorFeedback(element) {
     element.classList.add('position-error')
-    console.log("Error feedback shown")
+    console.log('Error feedback shown')
     
     setTimeout(() => {
       element.classList.remove('position-error')
